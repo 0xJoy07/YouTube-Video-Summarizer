@@ -7,32 +7,6 @@ import { pushSummaryToCache } from "../services/cache.js";
 import { summarizeVideo } from "../services/api.js";
 import { normalizeSummary } from "../utils/summary.js";
 
-const API_KEY_STORAGE_KEY = "summ-ai:openrouter-key";
-
-function getStoredApiKey() {
-  try {
-    return sessionStorage.getItem(API_KEY_STORAGE_KEY) || "";
-  } catch {
-    return "";
-  }
-}
-
-function storeApiKey(key) {
-  try {
-    sessionStorage.setItem(API_KEY_STORAGE_KEY, key);
-  } catch {
-    /* silently ignore */
-  }
-}
-
-function clearStoredApiKey() {
-  try {
-    sessionStorage.removeItem(API_KEY_STORAGE_KEY);
-  } catch {
-    /* silently ignore */
-  }
-}
-
 // ---------- API Key Gate ----------
 
 function ApiKeyGate({ onConnect }) {
@@ -51,7 +25,6 @@ function ApiKeyGate({ onConnect }) {
       return;
     }
     setError("");
-    storeApiKey(trimmed);
     onConnect(trimmed);
   }
 
@@ -106,7 +79,7 @@ function ApiKeyGate({ onConnect }) {
           )}
 
           <p className="mt-6 text-xs leading-5 text-foreground/40">
-            Your key is stored only in this browser tab&rsquo;s session and is never saved to any server.
+            Your key is kept only in memory during this session and deleted upon reload.
           </p>
         </div>
       </section>
@@ -117,7 +90,7 @@ function ApiKeyGate({ onConnect }) {
 // ---------- Main Dashboard ----------
 
 export function DashboardPage() {
-  const [apiKey, setApiKey] = useState(getStoredApiKey);
+  const [apiKey, setApiKey] = useState("");
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
@@ -129,7 +102,6 @@ export function DashboardPage() {
   }
 
   function handleDisconnect() {
-    clearStoredApiKey();
     setApiKey("");
     setSummary(null);
     setStatus("idle");

@@ -52,9 +52,9 @@ function useVideoFadeLoop(videoRef) {
   }, [videoRef]);
 }
 
-function NavButton({ children, dropdown = false }) {
+function NavButton({ children, onClick, dropdown = false }) {
   return (
-    <button className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/90 transition hover:text-foreground">
+    <button onClick={onClick} className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/90 transition hover:text-foreground">
       {children}
       {dropdown ? <ChevronDown size={15} strokeWidth={2} /> : null}
     </button>
@@ -84,10 +84,9 @@ export function LandingPage() {
             </button>
 
             <div className="hidden items-center gap-8 md:flex">
-              <NavButton dropdown>How it Works</NavButton>
-              <NavButton>Use Cases</NavButton>
-              <NavButton>Pricing</NavButton>
-              <NavButton dropdown>API</NavButton>
+              <NavButton onClick={() => navigateTo("/how-it-works")}>How it Works</NavButton>
+              <NavButton onClick={() => navigateTo("/use-cases")}>Use Cases</NavButton>
+              <NavButton onClick={() => navigateTo("/docs")}>Docs</NavButton>
             </div>
 
             <Button
