@@ -120,7 +120,11 @@ async def summarize(body: SummarizeRequest):
         raise HTTPException(status_code=400, detail="Could not extract a valid YouTube video ID from the URL.")
 
     try:
-        ytt = YouTubeTranscriptApi()
+        proxy_url = os.environ.get("PROXY_URL")
+        if proxy_url:
+            ytt = YouTubeTranscriptApi(proxy_url=proxy_url)
+        else:
+            ytt = YouTubeTranscriptApi()
         # Accept any available language — the LLM will translate to English
         transcript = ytt.fetch(
             video_id,
