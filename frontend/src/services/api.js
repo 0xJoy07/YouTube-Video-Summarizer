@@ -26,7 +26,7 @@ export async function summarizeVideo(youtubeUrl, apiKey) {
       method: "POST",
       body: JSON.stringify({ youtubeUrl, apiKey }),
     });
-    return response.summary || response.data || response;
+    return response;
   } catch (error) {
     if (!import.meta.env.DEV) throw error;
     await new Promise((resolve) => setTimeout(resolve, 900));

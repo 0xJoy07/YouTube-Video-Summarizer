@@ -42,6 +42,8 @@ def parse_summary_json(json_string):
         print("Error parsing JSON:", e)
         return None
 
+    return data
+
 
 def extract_video_id(url):
     """Extract the 11-character video ID from a YouTube URL."""

@@ -7,7 +7,7 @@ import logoUrl from "../assets/logo.png";
 const videoUrl =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_065045_c44942da-53c6-4804-b734-f9e07fc22e08.mp4";
 
-const logos = ["Vortex", "Nimbus", "Prysma", "Cirrus", "Kynder", "Halcyn"];
+const logos = ["TechDigest", "EduSpark", "PodStream", "VlogDaily", "CodeCast", "NewsBite"];
 
 function useVideoFadeLoop(videoRef) {
   useEffect(() => {
@@ -129,9 +129,7 @@ export function LandingPage() {
         <section className="pb-10">
           <div className="mx-auto flex max-w-5xl items-center gap-12 px-5">
             <p className="shrink-0 text-sm leading-5 text-foreground/50">
-              Trusted by creators
               <br />
-              across the globe
             </p>
             <div className="marquee-window min-w-0 flex-1 overflow-hidden">
               <div className="flex w-max animate-marquee gap-16">
