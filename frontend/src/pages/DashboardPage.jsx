@@ -128,7 +128,20 @@ export function DashboardPage() {
       setMessage("Summary generated and saved to local history.");
     } catch (error) {
       setStatus("error");
-      setMessage(error.message || "Could not generate the summary.");
+      const msg = error.message || "";
+      if (msg.includes("blocking") || msg.includes("proxy") || msg.includes("IP")) {
+        setMessage(
+          "YouTube is currently blocking transcript requests from our server. Please try again later or contact the developer."
+        );
+      } else if (msg.includes("transcript") || msg.includes("Could not fetch")) {
+        setMessage(
+          "Could not fetch the transcript for this video. The video may not have captions enabled."
+        );
+      } else if (msg.includes("401") || msg.includes("Invalid")) {
+        setMessage("Your API key appears to be invalid. Please disconnect and re-enter it.");
+      } else {
+        setMessage(msg || "Could not generate the summary. Please try again.");
+      }
     }
   }
 

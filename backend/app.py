@@ -108,7 +108,13 @@ Transcript:
         )
 
     data = response.json()
-    return data["choices"][0]["message"]["content"]
+    content = data["choices"][0]["message"]["content"]
+    print("Raw AI response:", content[:500] if content else "<EMPTY>")
+
+    if not content or not content.strip():
+        raise HTTPException(status_code=502, detail="The AI model returned an empty response. Please try again.")
+
+    return content
 
 
 # ---------- routes ----------
@@ -159,6 +165,6 @@ async def summarize(body: SummarizeRequest):
     parsed = parse_summary_json(raw_summary)
 
     if parsed is None:
-        raise HTTPException(status_code=500, detail="Failed to parse the AI-generated summary.")
+        raise HTTPException(status_code=500, detail="Failed to parse the AI-generated summary. The model may have returned malformed JSON. Please try again.")
 
     return parsed
