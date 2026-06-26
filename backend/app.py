@@ -3,6 +3,7 @@ import re
 import json
 import httpx
 from youtube_transcript_api import YouTubeTranscriptApi
+from youtube_transcript_api.proxies import GenericProxyConfig
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -127,7 +128,9 @@ async def summarize(body: SummarizeRequest):
     try:
         proxy_url = os.environ.get("PROXY_URL")
         if proxy_url:
-            ytt = YouTubeTranscriptApi(proxy_url=proxy_url)
+            ytt = YouTubeTranscriptApi(
+                proxy_config=GenericProxyConfig(https_url=proxy_url)
+            )
         else:
             ytt = YouTubeTranscriptApi()
         # Accept any available language — the LLM will translate to English
