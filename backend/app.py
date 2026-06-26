@@ -112,6 +112,11 @@ Transcript:
 
 # ---------- routes ----------
 
+@app.get("/")
+async def health_check():
+    return {"status": "ok"}
+
+
 @app.post("/summarize")
 async def summarize(body: SummarizeRequest):
 
